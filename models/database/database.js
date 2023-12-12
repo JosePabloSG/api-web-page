@@ -1,7 +1,5 @@
-/*
-! Este archivo falta de terminar el CRUD de la base de datos
-*/
-import { MongoClient, ObjectId, ObjectId, ServerApiVersion } from 'mongodb'
+// FIXME: CRUD terminado esperando para revision
+import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb'
 
 const uri = process.env.MONGODB_URI
 
@@ -27,7 +25,6 @@ async function connect () {
 }
 
 export class WebModel {
-
   static async getAll () {
     const db = await connect()
 
@@ -40,8 +37,8 @@ export class WebModel {
     return db.findOne({ _id: objectId })
   }
 
-  static async create({ input }) {
-    const db =  await connect()
+  static async create ({ input }) {
+    const db = await connect()
     const { insertedId } = await db.insertOne(input)
 
     return {
@@ -50,21 +47,21 @@ export class WebModel {
     }
   }
 
-  static async update ({ id , input }) {
-    const db =  await connect()
+  static async update ({ id, input }) {
+    const db = await connect()
     const objectId = new ObjectId(id)
 
-    const { ok, value } = await db.findOneAndUpdate({ _id:objectId }, { $set: input }, { returnNewDocument: true })
+    const { ok, value } = await db.findOneAndUpdate({ _id: objectId }, { $set: input }, { returnNewDocument: true })
 
-    if(!ok) return false
+    if (!ok) return false
 
     return value
   }
 
-  static async delete () {
-    const db = new connect()
+  static async delete ({ id }) {
+    const db = await connect()
     const objectId = new ObjectId(id)
-    const { deleteCount } = await db.deleteOne({ _id:objectId })
+    const { deleteCount } = await db.deleteOne({ _id: objectId })
     return deleteCount > 0
   }
 }

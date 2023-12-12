@@ -1,3 +1,4 @@
+// TODO : agregar el cors
 import express, { json } from 'express'
 import { createWebRouter } from './routes/routes.js'
 import 'dotenv/config.js'
