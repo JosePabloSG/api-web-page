@@ -1,5 +1,9 @@
-// FIXME: SERVER WITH MONGODB TERMINADO ESPERANDO PARA REVISION
-import { createApp } from './app.js'
-import { WebModel } from './models/database/database.js'
+// server-with-mongodb.js
+import { createApp } from './app.js';
+import { WebModel } from './models/database/database.js';
 
-createApp({ webModel: WebModel })
+// Crear una instancia de WebModel
+const webModelInstance = new WebModel();
+
+// Pasar WebModel a la función createApp
+createApp({ WebModel: webModelInstance });
