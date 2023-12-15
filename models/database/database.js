@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 // FIXME: CRUD terminado esperando para revision
 import { MongoClient, ObjectId, ServerApiVersion } from 'mongodb'
 
