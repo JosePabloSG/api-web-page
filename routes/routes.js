@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
 import { Router } from 'express'
-import WebController from '../controllers/web.controller.js'
+import { WebController } from '../controllers/web.controller.js'
 
 export const createWebRouter = ({ WebModel }) => {
   const WebRouter = Router()

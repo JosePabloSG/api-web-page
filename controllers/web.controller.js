@@ -1,16 +1,15 @@
-/* eslint-disable prettier/prettier */
-
-class WebController {
-  constructor (WebModel) {
-    this.WebModel = WebModel
+export class WebController {
+  constructor ({ webModel }) {
+    this.webModel = webModel
   }
 
-  async getAll (req, res) {
+  getAll = async (req, res) => {
     try {
-      const data = await this.WebModel.getAll()
+      const where = req.query
+      const data = await this.webModel.getAll(where)
       res.json(data)
     } catch (error) {
-      console.error(error)
+      console.error('Error: ', error)
       res.status(500).send('Error interno del servidor')
     }
   }
@@ -18,7 +17,7 @@ class WebController {
   async getById (req, res) {
     try {
       const { id } = req.params
-      const data = await this.WebModel.getById({ id })
+      const data = await this.webModel.getById({ id })
       if (data) {
         res.json(data)
       } else {
@@ -33,7 +32,7 @@ class WebController {
   async create (req, res) {
     try {
       const { body: input } = req
-      const data = await this.WebModel.create({ input })
+      const data = await this.webModel.create({ input })
       res.status(201).json(data)
     } catch (error) {
       console.error(error)
@@ -45,7 +44,7 @@ class WebController {
     try {
       const { id } = req.params
       const { body: input } = req
-      const updatedData = await this.WebModel.update({ id, input })
+      const updatedData = await this.webModel.update({ id, input })
 
       if (updatedData) {
         res.json(updatedData)
@@ -61,7 +60,7 @@ class WebController {
   async delete (req, res) {
     try {
       const { id } = req.params
-      const deleted = await this.WebModel.delete({ id })
+      const deleted = await this.webModel.delete({ id })
 
       if (deleted) {
         res.send('Registro eliminado exitosamente')
@@ -74,5 +73,3 @@ class WebController {
     }
   }
 }
-
-export default WebController

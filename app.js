@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 // TODO : agregar el cors
 import express, { json } from 'express'
 import { createWebRouter } from './routes/routes.js'
