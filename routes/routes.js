@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { WebController } from '../controllers/web.controller.js'
+import { WebController } from '../controllers/controller.js'
 
-export const createWebRouter = ({ WebModel }) => {
+export const createWebRouter = ({ webModel }) => {
   const WebRouter = Router()
-  const webControllerInstance = new WebController({ WebModel })
+  const webControllerInstance = new WebController({ webModel })
 
   WebRouter.get('/', webControllerInstance.getAll)
   WebRouter.get('/:id', webControllerInstance.getById)

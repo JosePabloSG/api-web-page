@@ -10,34 +10,32 @@ const client = new MongoClient(uri, {
   }
 })
 
-async function run () {
+async function connect () {
   try {
-    // Connect the client to the server(optional starting in v4.7)
     await client.connect()
-    // Send a ping to confirm a successful connection
-    await client.db('admin').command({ ping: 1 })
-    console.log('Pinged your deployment. You successfully connected to MongoDB!')
-  } finally {
-    // Ensures that the client will close when you finish/error
+    const database = client.db('database')
+    return database.collection('data')
+  } catch (error) {
+    console.error('Error connecting to the database')
+    console.error(error)
     await client.close()
   }
 }
-run().catch(console.dir)
 
 export class WebModel {
   static async getAll () {
-    const db = await run()
+    const db = await connect()
     return db.find({}).toArray()
   }
 
   static async getById ({ id }) {
-    const db = await run()
+    const db = await connect()
     const objectId = new ObjectId(id)
     return db.findOne({ _id: objectId })
   }
 
   static async create ({ input }) {
-    const db = await run()
+    const db = await connect()
     const { insertedId } = await db.insertOne(input)
 
     return {
@@ -47,7 +45,7 @@ export class WebModel {
   }
 
   static async update ({ id, input }) {
-    const db = await run()
+    const db = await connect()
     const objectId = new ObjectId(id)
 
     const { ok, value } = await db.findOneAndUpdate({ _id: objectId }, { $set: input }, { returnNewDocument: true })
@@ -58,7 +56,7 @@ export class WebModel {
   }
 
   static async delete ({ id }) {
-    const db = await run()
+    const db = await connect()
     const objectId = new ObjectId(id)
     const { deleteCount } = await db.deleteOne({ _id: objectId })
     return deleteCount > 0
